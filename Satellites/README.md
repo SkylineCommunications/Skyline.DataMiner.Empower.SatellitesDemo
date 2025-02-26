@@ -4,6 +4,16 @@
 
 Empower Demo - Provides an API to access satellite data on a DMS.
 
+### About the data
+
+This library is only to be used as a demo in Empower, and does **not** provide actual current satellite information.
+Satellite information is read from a TLE text file assumed to be present on the local file system on the path **C:\Skyline DataMiner\Documents\Empower\satellites.tle.txt**.
+The satellite data is assumed to be retrieved from the [CelesTrak Satellite TLE API](https://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=tle) on October 16th, 2023 at 13h28 UTC. 
+
+To avoid satellite decay errors when retrieving the position of a satellite, only the time of day from the provided `DateTime` is used and added as an offset.
+Therefore, the position will not match the real satellite position at that time.
+
+
 ### About DataMiner
 
 DataMiner is a transformational platform that provides vendor-independent control and monitoring of devices and services. Out of the box and by design, it addresses key challenges such as security, complexity, multi-cloud, and much more. It has a pronounced open architecture and powerful capabilities enabling users to evolve easily and continuously.
@@ -19,5 +29,25 @@ A unique catalog of 7000+ connectors already exist. In addition, you can leverag
 
 At Skyline Communications, we deal in world-class solutions that are deployed by leading companies around the globe. Check out [our proven track record](https://aka.dataminer.services/about-skyline) and see how we make our customers' lives easier by empowering them to take their operations to the next level.
 
-<!-- Uncomment below and add more info to provide more information about how to use this package. -->
-<!-- ## Getting Started -->
+## Getting Started
+
+### Retrieving satellites
+
+```csharp
+using Satellites;
+
+var satellites = SatelliteAPI.GetSatellites();
+```
+
+### Getting satellite positions
+
+```csharp
+var satellite = satellites[0];
+
+// Get the position of the satellite at the current time
+var currentPosition = satellite.GetPosition();
+
+// Get the position of the satellite in one hour from now
+var nextHour = DateTime.UtcNow.AddHours(1);
+var nextHourPosition = satellite.GetPosition(nextHour);
+```
