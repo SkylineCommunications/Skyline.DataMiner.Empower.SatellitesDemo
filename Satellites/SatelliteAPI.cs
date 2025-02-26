@@ -10,7 +10,7 @@ namespace Satellites
     public static class SatelliteAPI
     {
         internal const int MaxSatelliteCount = 100;
-        internal const string TlePath = @"C:\Skyline DataMiner\Documents\Create your own GQI data source\satellites.tle.txt";
+        internal const string TlePath = @"C:\Skyline DataMiner\Documents\Empower\satellites.tle.txt";
         internal static readonly DateTime TleOrigin = new DateTime(2023, 10, 16, 13, 28, 00, DateTimeKind.Utc);
 
         private static readonly object _lock = new object();
