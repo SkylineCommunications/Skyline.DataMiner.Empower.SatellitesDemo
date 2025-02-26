@@ -2,17 +2,19 @@
 
 ## About
 
-Empower Demo - Provides an API to access satellite data on a DMS.
+This NuGet package is intended for use during an [Empower](https://empower.skyline.be/) demo.
+It provides an API to access dummy satellite data on a DataMiner system.
 
 ### About the data
 
-This library is only to be used as a demo in Empower, and does **not** provide actual current satellite information.
-Satellite information is read from a TLE text file assumed to be present on the local file system on the path **C:\Skyline DataMiner\Documents\Empower\satellites.tle.txt**.
+> [!NOTE]
+> This package it does **not** provide actual current satellite information.
+
+Satellite information is read from a TLE text file assumed to be present in the local file system at **C:\Skyline DataMiner\Documents\Empower\satellites.tle.txt**.
 The satellite data is assumed to be retrieved from the [CelesTrak Satellite TLE API](https://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=tle) on October 16th, 2023 at 13h28 UTC. 
 
 To avoid satellite decay errors when retrieving the position of a satellite, only the time of day from the provided `DateTime` is used and added as an offset.
 Therefore, the position will not match the real satellite position at that time.
-
 
 ### About DataMiner
 
@@ -50,4 +52,17 @@ var currentPosition = satellite.GetPosition();
 // Get the position of the satellite in one hour from now
 var nextHour = DateTime.UtcNow.AddHours(1);
 var nextHourPosition = satellite.GetPosition(nextHour);
+```
+
+### Getting satellite positions periodically
+
+This package contains a `Trigger` class to help you update satellite positions every second.
+
+```csharp
+var trigger = new Trigger(() => {
+	var updatedPosition = satellite.GetPosition();
+	
+	// Do something with the updated position
+	...
+});
 ```
